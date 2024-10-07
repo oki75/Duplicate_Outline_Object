@@ -45,13 +45,6 @@ class OBJECT_OT_duplicate_Outline_Object(bpy.types.Operator):
             bpy.ops.object.material_slot_add()
         duplicated_obj.material_slots[0].material = new_material
 
-        # Solidifyモディファイアを追加
-        solidify_mod = duplicated_obj.modifiers.new(name="Solidify", type='SOLIDIFY')
-        solidify_mod.use_flip_normals = True
-        solidify_mod.offset = 0
-        solidify_mod.material_offset = 1
-        solidify_mod.thickness = 0.015
-        solidify_mod.vertex_group = vertex_group.name
 
         # Surface Deform モディファイアを追加
         surface_deform_mod = duplicated_obj.modifiers.new(name="SurfaceDeform", type='SURFACE_DEFORM')
@@ -62,6 +55,14 @@ class OBJECT_OT_duplicate_Outline_Object(bpy.types.Operator):
         bpy.ops.object.surfacedeform_bind(modifier="SurfaceDeform")
 
         self.report({'INFO'}, f"{duplicated_obj.name} に Surface Deform モディファイアを追加し、ターゲットを {original_obj.name} に設定しました")
+
+         # Solidifyモディファイアを追加
+        solidify_mod = duplicated_obj.modifiers.new(name="Solidify", type='SOLIDIFY')
+        solidify_mod.use_flip_normals = True
+        solidify_mod.offset = 0
+        solidify_mod.material_offset = 1
+        solidify_mod.thickness = 0.015
+        solidify_mod.vertex_group = vertex_group.name
 
         return {'FINISHED'}
 
